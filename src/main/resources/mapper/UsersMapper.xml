@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper:根标签，namespace：命名空间，随便写，一般保证命名空间唯一 -->
+<mapper namespace="com.example.demo.dao.UserMapper">
+    <!-- statement，内容：sql语句。id：唯一标识，随便写，在同一个命名空间下保持唯一
+       resultType：sql语句查询结果集的封装类型,tb_user即为数据库中的表
+     -->
+
+
+    <resultMap  id="userResult" type="com.example.library.pojo.User">
+        <id property="uuid" column="uuid"/>
+        <result property="userName" column="user_name"/>
+        <result property="password" column="password"/>
+        <result property="borrowedBooks" column="borrowed_books"/>
+        <result property="cid" column="cid"/>
+        <result property="availableQuantity" column="available_quantity"/>
+        <result property="allBooks" column="all_books"/>
+        <result property="outTime" column="out_time"/>
+    </resultMap>
+
+    <insert id="insertToUsers">
+        insert into users
+        (userName,password)
+        values
+        (#{userName},#{password})
+    </insert>
+
+    <select id="selectByUuid" resultMap="userResult">
+        select *from users where uuid =#{uuid}
+    </select>
+
+    <select id="selectByUserName" resultMap="userResult">
+        select *from users where userName =#{userName}
+    </select>
+
+    <update id="updataByUuid">
+        update users
+        set
+            borrowed_books=#{borrowedBooks},
+            all_books=#{allBooks},
+            out_time=#{outTime},
+            cid=#{cid},
+            available_quantity=#{availableQuantity}
+        where uuid=#{uuid}
+    </update>
+
+
+
+</mapper>

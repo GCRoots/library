@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper:根标签，namespace：命名空间，随便写，一般保证命名空间唯一 -->
+<mapper namespace="com.example.demo.dao.UserMapper">
+    <!-- statement，内容：sql语句。id：唯一标识，随便写，在同一个命名空间下保持唯一
+       resultType：sql语句查询结果集的封装类型,tb_user即为数据库中的表
+     -->
+
+
+    <resultMap  id="scoreResult" type="com.example.library.pojo.Score">
+        <id property="sid" column="sid"/>
+        <result property="uuid" column="uuid"/>
+        <result property="title" column="title"/>
+        <result property="score" column="score"/>
+
+    </resultMap>
+
+
+    <select id="selectByUuidAndTitleInScore" resultMap="scoreResult">
+        select *from score where uuid =#{uuid} and title=#{title}
+    </select>
+
+    <update id="updataByUuidAndTitle">
+        update score
+        set
+            score=#{score}
+        where uuid=#{uuid} and title=#{title}
+    </update>
+
+    <insert id="insertToScore">
+        insert into score
+        (title, score, uuid)
+        values
+        (#{title},#{score},#{uuid})
+    </insert>
+
+
+</mapper>

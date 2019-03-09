@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper:根标签，namespace：命名空间，随便写，一般保证命名空间唯一 -->
+<mapper namespace="com.example.demo.dao.CommentMapper">
+    <!-- statement，内容：sql语句。id：唯一标识，随便写，在同一个命名空间下保持唯一
+       resultType：sql语句查询结果集的封装类型,tb_user即为数据库中的表
+     -->
+
+
+    <resultMap  id="commentResult" type="com.example.library.pojo.Comment">
+        <id property="cid" column="cid"/>
+        <result property="uuid" column="uuid"/>
+        <result property="userName" column="user_name"/>
+        <result property="title" column="title"/>
+        <result property="score" column="score"/>
+        <result property="content" column="content"/>
+    </resultMap>
+
+    <insert id="insertIntoComment">
+        insert into comment (cid, uuid, user_name, title, content)
+        VALUES (#{cid},#{uuid},#{user_name},#{title},#{content})
+    </insert>
+
+    <delete id="deleteByCid">
+        delete from comment where cid=#{cid}
+    </delete>
+
+    <select id="selectByConnent" resultMap="commentResult">
+        select *from comment where content=#{content}
+    </select>
+
+    <select id="selectByCid" resultMap="commentResult">
+        select *from comment where cid=#{cid}
+    </select>
+
+    <select id="selectByUuidAndTitleInComment" resultMap="commentResult">
+        select *from comment where uuid=#{uuid} and title=#{title}
+    </select>
+
+    <update id="updataByUuidAndTitleInComment">
+        update comment
+        set
+            content=#{content}
+        where uuid=#{uuid} and title=#{title}
+    </update>
+
+
+</mapper>
